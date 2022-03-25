@@ -157,9 +157,9 @@ void Viewer::Run()
         cv::imshow("ORB-SLAM2: Current Frame",im);
         cv::waitKey(mT);
 
-        cv::Mat imd = mpFrameDrawer->DrawDepth();
-        cv::imshow("ORB-SLAM2: Current Depth",imd);
-        cv::waitKey(mT);
+        // cv::Mat imd = mpFrameDrawer->DrawDepth();
+        // cv::imshow("ORB-SLAM2: Current Depth",imd);
+        // cv::waitKey(mT);
 
         cv::Mat LKcolor = mpFrameDrawer->LK;
         if(!LKcolor.empty())

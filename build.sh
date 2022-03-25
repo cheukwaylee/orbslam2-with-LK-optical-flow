@@ -1,3 +1,7 @@
+#  CW running
+# cd build
+# ./stereo_kitti ../Vocabulary/ORBvoc.txt ../Examples/Stereo/KITTI00-02.yaml /mnt/hgfs/code/data_odometry_gray/00/
+
 echo "tar zxvf ORBvoc.tar.gz ..."
 cd Vocabulary
 tar zxvf ORBvoc.tar.gz
