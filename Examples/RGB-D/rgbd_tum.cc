@@ -41,6 +41,15 @@ int main(int argc, char **argv)
              << "Usage: ./rgbd_tum path_to_vocabulary path_to_settings path_to_sequence path_to_association" << endl;
         return 1;
     }
+    /*
+
+    ./rgbd_tum
+    ../Vocabulary/ORBvoc.txt
+    ../Examples/RGB-D/TUM1.yaml
+    /mnt/hgfs/code/data_tum_rgbd/rgbd_dataset_freiburg1_xyz/
+    ../Examples/RGB-D/associations/fr1_xyz.txt
+
+    */
 
     // Retrieve paths to images
     vector<string> vstrImageFilenamesRGB;
