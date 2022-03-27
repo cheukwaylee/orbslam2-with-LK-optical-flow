@@ -31,6 +31,12 @@
 #include <sys/time.h>
 #include <time.h>
 
+// debug: ‘usleep’ was not declared in this scope
+// TODO but why momo_kitti.cc do not need it?
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+
 using namespace std;
 
 void LoadImages(const string &strSequence, vector<string> &vstrImageFilenames,

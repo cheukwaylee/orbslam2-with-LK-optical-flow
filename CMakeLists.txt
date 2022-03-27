@@ -7,18 +7,18 @@ ENDIF()
 
 MESSAGE("Build type: " ${CMAKE_BUILD_TYPE})
 
-# Check C++11 or C++0x support
-add_definitions(-DCOMPILEDWITHC11)
+# Check C++14 or C++0x support
+add_definitions(-DCOMPILEDWITHC14)
 if( CMAKE_BUILD_TYPE MATCHES "Debug" )
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -Wall -msse3 -std=c++11 -pthread -g -march=native -Wno-deprecated-declarations")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -Wall -msse3 -std=c++14 -pthread -g -march=native -Wno-deprecated-declarations")
 else( CMAKE_BUILD_TYPE MATCHES "Release" )
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -Wall -msse3 -std=c++11 -pthread -O3 -march=native -Wno-deprecated-declarations")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -Wall -msse3 -std=c++14 -pthread -O3 -march=native -Wno-deprecated-declarations")
 endif( CMAKE_BUILD_TYPE MATCHES "Debug" )
 
 LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
 
 find_package(OpenCV  REQUIRED)
-find_package(Eigen3 REQUIRED)
+find_package(Eigen3 REQUIRED NO_MODULE)
 find_package(Pangolin REQUIRED)
 
 include_directories(
@@ -65,6 +65,9 @@ target_link_libraries(mono_kitti ${PROJECT_NAME})
 
 add_executable(mono_rpc Examples/Monocular/mono_rpc.cc)
 target_link_libraries(mono_rpc ${PROJECT_NAME})
+
+add_executable(mono_tum Examples/Monocular/mono_tum.cc)
+target_link_libraries(mono_tum ${PROJECT_NAME})
 
 add_executable(stereo_kitti Examples/Stereo/stereo_kitti.cpp)
 target_link_libraries(stereo_kitti ${PROJECT_NAME})
