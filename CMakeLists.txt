@@ -9,11 +9,14 @@ MESSAGE("Build type: " ${CMAKE_BUILD_TYPE})
 
 # Check C++14 or C++0x support
 add_definitions(-DCOMPILEDWITHC14)
-if( CMAKE_BUILD_TYPE MATCHES "Debug" )
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -Wall -msse3 -std=c++14 -pthread -g -march=native -Wno-deprecated-declarations")
-else( CMAKE_BUILD_TYPE MATCHES "Release" )
+# if( CMAKE_BUILD_TYPE MATCHES "Debug" )
+  # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -Wall -msse3 -std=c++14 -pthread -g -march=native -Wno-deprecated-declarations")
+# else( CMAKE_BUILD_TYPE MATCHES "Release" )
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -Wall -msse3 -std=c++14 -pthread -O3 -march=native -Wno-deprecated-declarations")
-endif( CMAKE_BUILD_TYPE MATCHES "Debug" )
+# endif( CMAKE_BUILD_TYPE MATCHES "Debug" )
+
+# set(CMAKE_CXX_STANDARD 14)
+# set(CMAKE_CXX_EXTENSIONS OFF)
 
 LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
 

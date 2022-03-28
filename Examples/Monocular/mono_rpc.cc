@@ -159,7 +159,8 @@ int main(int argc, char **argv)
         SLAM.TrackMonocular(gSafeImage, timestamp);
 
         // sleep
-        usleep(30000);
+        // usleep(30000); // 30ms
+        usleep(80000); // 30ms
     }
 
     // Stop all threads
