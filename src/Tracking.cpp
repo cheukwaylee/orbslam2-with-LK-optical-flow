@@ -227,11 +227,37 @@ cv::Mat Tracking::GrabImageStereo(const cv::Mat &imRectLeft, const cv::Mat &imRe
     }
 
     // 步骤2：构造Frame
-    mCurrentFrame = Frame(mImGray,imGrayRight,timestamp,mpORBextractorLeft,mpORBextractorRight,mpORBVocabulary,mK,mDistCoef,mbf,mThDepth);
-
-    // 步骤3：跟踪
-    Track();
-
+    
+    // 步骤4：跟踪
+    needNewKF = NeedNewKeyFrame();
+    if (!needNewKF)
+    {
+        clock_t a = clock();
+        mCurrentFrame = Frame(true);
+        cv::Mat mTcw;
+        last_mnMatchesInliers = mnMatchesInliers;
+        LKimg = computeMtcwUseLK(mpLastKeyFrame, imRectLeft, mCurrentFrame.mnId - mpLastKeyFrame->mnFrameId == 1, mK, mDistCoef, mTcw, mnMatchesInliers);
+        //        LKimg = flow(mpLastKeyFrame, imRGB,  mCurrentFrame.mnId - mpLastKeyFrame->mnFrameId ==1, mK, mDistCoef, mTcw);
+        mpFrameDrawer->LK = LKimg;
+        mCurrentFrame.mTcw = mTcw;
+        clock_t b = clock();
+        cout << "track LK optical flow use time:" << 1000 * (float)(b - a) / CLOCKS_PER_SEC << "ms" << endl;
+        mpFrameDrawer->Update(this);
+        needNewKF = NeedNewKeyFrame();
+    }
+    if (needNewKF)
+    {
+        clock_t a1 = clock();
+        mCurrentFrame = Frame(mImGray,imGrayRight,timestamp,mpORBextractorLeft,mpORBextractorRight,mpORBVocabulary,mK,mDistCoef,mbf,mThDepth);
+        //         cout<<" track Feature :currentFrame ID:"<<mCurrentFrame.mnId<<endl;
+        Track();
+        clock_t a2 = clock();
+        cout << "KeyFrame track feature  use time:" << 1000 * (float)(a2 - a1) / CLOCKS_PER_SEC << "ms------" << endl;
+    }
+    //    cout<<"currentFrame and pose: "<<mCurrentFrame.mnId<<endl;
+    //    cout<<mCurrentFrame.mTcw<<endl;
+    //    cout<<"orbslam mTcw:"<<endl<<mCurrentFrame.mTcw<<endl;
+    //    count++;
     return mCurrentFrame.mTcw.clone();
 }
 

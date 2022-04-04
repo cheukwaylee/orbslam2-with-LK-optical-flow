@@ -36,11 +36,17 @@ void LoadImages(const string &strPathToSequence, vector<string> &vstrImageLeft,
 
 int main(int argc, char **argv)
 {
-    if(argc != 4)
-    {
-        cerr << endl << "Usage: ./stereo_kitti path_to_vocabulary path_to_settings path_to_sequence" << endl;
-        return 1;
-    }
+    // if (argc != 4)
+    // {
+    //     cerr << endl
+    //          << "Usage: ./stereo_kitti path_to_vocabulary path_to_settings path_to_sequence" << endl;
+    //     return 1;
+    // }
+
+    // ../Examples/Stereo/stereo_kitti ../Vocabulary/ORBvoc.txt ../Examples/Stereo/KITTI03.yaml /mnt/hgfs/code/data_odometry_gray/00/
+    argv[1] = "../Vocabulary/ORBvoc.txt";
+    argv[2] = "../Examples/Stereo/KITTI00-02.yaml";
+    argv[3] = "/home/cw/thesis_dataset/data_odometry_gray/dataset/sequences/00/";
 
     // Retrieve paths to images
     vector<string> vstrImageLeft;
