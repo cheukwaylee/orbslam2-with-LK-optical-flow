@@ -1419,6 +1419,10 @@ bool Tracking::NeedNewKeyFrame()
     // Condition 2: Few tracked points compared to reference keyframe. Lots of visual odometry compared to map matches.
     // 阈值比c1c要高，与之前参考帧（最近的一个关键帧）重复度不是太高
 //    const bool c2 = ((mnMatchesInliers<nRefMatches*thRefRatio || ratioMap<thMapRatio) && mnMatchesInliers>15);
+    //! debug
+    if (mnMatchesInliers == 0)
+        mnMatchesInliers = 1;
+    cout << "last, mnMatchesInliers " << last_mnMatchesInliers << " , " <<mnMatchesInliers<<endl;
     const bool c3 = mSensor!=System::MONOCULAR &&(mnMatchesInliers<300 && mnMatchesInliers>0);
     const bool c4 = mSensor!=System::MONOCULAR &&(mnMatchesInliers<100 && mnMatchesInliers>0);
     const bool c5 = last_mnMatchesInliers/mnMatchesInliers>2;///inlier decrease fast

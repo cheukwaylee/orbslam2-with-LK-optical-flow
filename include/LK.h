@@ -71,8 +71,16 @@ Mat computeMtcwUseLK(KeyFrame *lastKeyFrame, Mat color, bool lastColorIsKeyFrame
     vector<unsigned char> status;//判断该点是否跟踪失败
     vector<float> error;
     Mat last_gray,gray;//LK光流法用于跟踪特征点的两帧
+    if(color.channels()==3)
+    {// kitti dataset is gray scale
     cvtColor(last_color,last_gray,CV_BGR2GRAY);
     cvtColor(color,gray,CV_BGR2GRAY);
+    }
+    else
+    {
+        last_gray = last_color;
+        gray = color;
+    }
 //    cout<<"preKeyPointNum"<<prev_keypoints.size()<<endl;
     cv::calcOpticalFlowPyrLK( last_gray, gray, prev_keypoints, next_keypoints, status, error );//计算光流
 
@@ -130,6 +138,8 @@ Mat computeMtcwUseLK(KeyFrame *lastKeyFrame, Mat color, bool lastColorIsKeyFrame
     }
     /** 画出 keypoints*/
     cv::Mat img_show = color.clone();
+    if (img_show.channels() < 3)
+        cvtColor(img_show, img_show, CV_GRAY2RGB);
     int point = 0;
     int iterOfInlier = 0;
     for ( auto kp:keypoints )
